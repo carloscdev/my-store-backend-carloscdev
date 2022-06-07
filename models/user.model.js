@@ -26,10 +26,23 @@ const userSchema = new Schema({
 userSchema.pre('save', async function save(next) {
   try {
     if (!this.isModified('password')) return next();
-    this.password = await bcrypt.hashSync(this.password, saltRounds);
-    next()
+    this.password = await bcrypt.hash(this.password, saltRounds);
+    next();
   } catch (error) {
     next(error)
+  }
+});
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+  try {
+    const update = this.getUpdate();
+    if (update.password) {
+      const password = await bcrypt.hash(update.password, saltRounds);
+      this.getUpdate().password = password;
+    }
+    next();
+  } catch (error) {
+    next(error);
   }
 });
 

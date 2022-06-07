@@ -55,12 +55,22 @@ class UserService {
 
   async updateUserAddress(req, res, next) {
     try {
-      const id = req.params.id
+      const _id = req.params.id;
       const user = req.user._id;
       const schema = ['name', 'address', 'reference', 'lat', 'lng'];
       const body = _.pick(req.body, schema);
-      const response = await UserAddress.findOneAndUpdate({id, user}, body, {new: true});
-      if (!response) throw boom.notFound('User not found');
+      const response = await UserAddress.findOneAndUpdate({_id, user}, body, {new: true});
+      if (!response) throw boom.notFound('User Address not found');
+      res.json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getUserAddress(req, res, next) {
+    try {
+      const _id = req.params.id;
+      const response = await UserAddress.findOne({_id});
       res.json(response);
     } catch (error) {
       next(error);
