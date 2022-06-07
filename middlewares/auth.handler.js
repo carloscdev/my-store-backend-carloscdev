@@ -29,4 +29,14 @@ async function verificationAddressByUser(req, res, next) {
   }
 }
 
-module.exports = { verificationTokenAuth, verificationAddressByUser };
+async function verificationAdminRole(req, res, next) {
+  try {
+    const role = req.user.role
+    if (role === 'ADMIN') return next();
+    throw boom.unauthorized("You don't have permissions to perform this action");
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { verificationTokenAuth, verificationAddressByUser, verificationAdminRole };

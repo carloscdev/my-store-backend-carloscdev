@@ -33,6 +33,11 @@ router.put(
   (req, res, next) => service.updateUserPassword(req, res, next)
 );
 router.get(
+  '/address/:id',
+  verificationTokenAuth,
+  (req, res, next) => service.getUserAddress(req, res, next)
+);
+router.get(
   '/address',
   verificationTokenAuth,
   (req, res, next) => service.getListAddressByUser(req, res, next)
