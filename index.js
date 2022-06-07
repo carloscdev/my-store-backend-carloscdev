@@ -1,20 +1,25 @@
 const express = require('express');
 const app = express();
-const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
 const routerApi = require('./routes');
 const path = require('path');
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
+const connectDB = require('./utils/database');
+const fileUpload = require('express-fileupload');
 
-dotenv.config();
+require('dotenv').config();
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: './uploads'
+}));
 
 // Connect DB
-require('./config/database');
+connectDB()
 
 routerApi(app);
 
