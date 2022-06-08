@@ -3,7 +3,7 @@ const Joi = require('joi');
 const title = Joi.string().min(3);
 const description = Joi.string().min(5);
 const image = Joi.string().uri();
-const position = Joi.number();
+const position = Joi.number().integer().positive();
 const is_active = Joi.boolean();
 
 const createCategorySchema = Joi.object({
