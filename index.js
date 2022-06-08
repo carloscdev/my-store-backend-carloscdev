@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const routerApi = require('./routes');
+const path = require('path');
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
 const connectDB = require('./utils/database');
 const fileUpload = require('express-fileupload');
@@ -25,6 +26,9 @@ routerApi(app);
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
+
+// Index.html
+app.use(express.static(path.join(__dirname, 'public')));
 
 const port = process.env.PORT || 5000;
 app.listen(port, (req, res) => {

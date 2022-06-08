@@ -60,7 +60,7 @@ class UserService {
       const schema = ['name', 'address', 'reference', 'lat', 'lng'];
       const body = _.pick(req.body, schema);
       const response = await UserAddress.findOneAndUpdate({_id, user}, body, {new: true});
-      if (!response) throw boom.notFound('User Address not found');
+      if (!response) throw boom.notFound("Address doesn't exist");
       res.json(response);
     } catch (error) {
       next(error);
@@ -70,7 +70,9 @@ class UserService {
   async getUserAddress(req, res, next) {
     try {
       const _id = req.params.id;
-      const response = await UserAddress.findOne({_id});
+      const user = req.user._id;
+      const response = await UserAddress.findOne({_id, user});
+      if (!response) throw boom.notFound("Address doesn't exist");
       res.json(response);
     } catch (error) {
       next(error);
