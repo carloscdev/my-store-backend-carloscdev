@@ -5,9 +5,9 @@ function logErrors(err, req, res, next) {
 
 function errorHandler(err, req, res, next) {
   res.status(400).json({
-    status: 400,
+    statusCode: 400,
     message: err.message,
-    stack: err.stack
+    error: err.stack
   });
 }
 

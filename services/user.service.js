@@ -1,6 +1,8 @@
 const { User, UserAddress } = require('../models/user.model');
 const boom = require('@hapi/boom');
 const _ = require('underscore');
+const {sendMail} = require('../utils/mailer');
+const {v1: uuidv1} = require('uuid');
 
 class UserService {
   constructor() {}
@@ -9,7 +11,17 @@ class UserService {
     try {
       const schema = ['first_name', 'last_name', 'document', 'email', 'phone', 'password'];
       const body = _.pick(req.body, schema);
+      body.code = uuidv1();
       const response = await User.create(body);
+      await sendMail({
+        to: response.email,
+        subject: "Welcome to my store - fake store",
+        template: "user",
+        context: {
+          name: response.first_name,
+          code: response.code
+        }
+      });
       res.json(response);
     } catch (error) {
       next(error);

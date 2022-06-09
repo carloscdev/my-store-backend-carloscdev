@@ -24,4 +24,17 @@ const createProductSchema = Joi.object({
   gallery
 });
 
-module.exports = { createProductSchema };
+const updateProductSchema = Joi.object({
+  title,
+  description,
+  image,
+  purchase_price,
+  sale_price,
+  has_stock,
+  stock,
+  is_active,
+  category,
+  gallery
+})
+
+module.exports = { createProductSchema, updateProductSchema };

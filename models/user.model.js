@@ -12,12 +12,13 @@ const role = {
 const userSchema = new Schema({
   first_name: {type: String, required: [true, 'First name is required']},
   last_name: {type: String, required: [true, 'Last name is required']},
+  code: {type: String, unique: true},
   document: {type: String, required: [true, 'Document is required'], unique: true},
   email: {type: String, required: [true, 'Email is required'], unique: true, uniqueCaseInsensitive: true},
   phone: {type: String, required: [true, 'Phone is required'], unique: true, uniqueCaseInsensitive: true},
   password: {type:String, required: [true, 'Password is required']},
   role: {type: String, default: 'USER', enum: role},
-  is_active: {type: Boolean, default: true}
+  is_active: {type: Boolean, default: false}
 }, {
   timestamps: true,
   versionKey: false
@@ -49,6 +50,7 @@ userSchema.pre("findOneAndUpdate", async function (next) {
 userSchema.methods.toJSON = function() {
   const obj = this.toObject();
   delete obj.password;
+  delete obj.code;
   return obj
 };
 

@@ -16,11 +16,10 @@ class ProductService {
 
   async getListProduct(req, res, next) {
     try {
-      const { search, min_price, max_price, sort, typeSort } = req.query;
+      const { search, min_price, max_price, sort, sortAsc } = req.query;
       const regex = new RegExp(search, 'i')
       const sortObject = {};
-      sortObject[sort ?? 'title'] = typeSort == 'asc' ? 1 : -1;
-      console.log(sortObject);
+      sortObject[sort ?? 'title'] = sortAsc == 'true' ? 1 : -1;
       const response = await Product.find({
         title: { $regex: regex },
         is_active: true,
@@ -50,6 +49,17 @@ class ProductService {
       const response = await Product.findOne({_id, is_active: true});
       if (!response) throw boom.notFound('Product is not found');
       res.json(response)
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateProduct(req, res, next) {
+    try {
+      const _id = req.params.id;
+      const body = req.body;
+      const response = await Product.findByIdAndUpdate(_id, body, {new: true});
+      res.json(response);
     } catch (error) {
       next(error);
     }
