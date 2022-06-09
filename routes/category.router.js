@@ -9,6 +9,8 @@ const { createCategorySchema, updateCategorySchema } = require('../schemas/categ
 
 router.get(
   '/',
+  verificationTokenAuth,
+  verificationAdminRole,
   (req, res, next) => service.getListCategory(req, res, next)
 );
 router.post(

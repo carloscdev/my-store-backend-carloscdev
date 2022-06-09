@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" type="text/css" />
+    <title>Document</title>
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        background-color: #ebebeb;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Lato, sans-serif;
+      }
+      .container {
+        background-color: white;
+        width: 580px;
+        max-width: 100%;
+        margin: 0 auto;
+        border-radius: 0.2rem;
+        overflow: hidden;
+        box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.2);
+      }
+      a { text-decoration: none; display: inline-block; font-weight: bold; }
+      header { background-color: #161A39; color: white; text-align: center; padding: 2rem; }
+      header h2 { font-size: 2rem; }
+      section { padding: 2rem; }
+      section p { font-size: 1.2rem; color: #4b4b4b; margin-bottom: 2rem; }
+      section .btn { padding: 1rem 2rem; background-color: #161A39; color: white; margin-bottom: 2rem;}
+      section small { display: block; opacity: 0.5; font-style: italic;}
+    </style>
+
+  </head>
+  <body>
+      <main class="container">
+        <header>
+          <img width="70" height="70" src="https://img.icons8.com/external-nawicon-flat-nawicon/344/external-store-grocery-nawicon-flat-nawicon.png" alt="Store Logo">
+          <h2>Welcome to My Store</h2>
+        </header>
+        <section>
+          <p>Hello <strong>{{name}}</strong></p>
+          <p>Your access code is: <strong>{{code}}</strong></p>
+          <p>To active your account, please follow the link below:</p>
+          <a href="https://me.carlosc.dev" target="_blank" class="btn">
+            LOGIN
+          </a>
+          <small>
+            Please ignore this email if you did not register at https://me.carlosc.dev.
+          </small>
+        </section>
+      </main>
+  </body>
+</html>
